@@ -1,6 +1,8 @@
 package k2b6s9j.OreEncyclopedia.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.command.ICommand;
@@ -12,6 +14,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class OECommand implements ICommand
 {
   private List aliases;
+  
   public OECommand()
   {
     this.aliases = new ArrayList();
@@ -61,13 +64,20 @@ public class OECommand implements ICommand
   
   private void commandVersion(ICommandSender sender, String[] arguments) {
 	  if (arguments[1].matches("all")) {
-		  for (String entry : OreDictionary.getOreNames()) {
+		  List<String> entries = Arrays.asList(OreDictionary.getOreNames());
+		  sortList(entries);
+		  for (String entry : entries) {
 			  sender.sendChatToPlayer(ChatMessageComponent.func_111066_d(entry));
 		  }
 		  return;
 	  } else {
 		  sender.sendChatToPlayer(ChatMessageComponent.func_111066_d("You must provide either an OreDictionary entry name or the term 'all'"));
 	  }
+  }
+  
+  private List sortList(List list) {
+      Collections.sort(list);
+      return list;
   }
 
   @Override
