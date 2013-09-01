@@ -1,0 +1,22 @@
+[
+{
+  "modid": "OreEncyclopedia",
+  "name": "OreEncyclopedia",
+  "description": "",
+  "version": "1.0",
+  "mcversion": "1.6.2",
+  "url": "http://www.k2b6s9j.com/",
+  "updateUrl": "http://www.k2b6s9j.com/",
+  "authors": [
+    "k2b6s9j"
+  ],
+  "credits": [
+    "CiderCraft",
+    "Sargunster",
+    "CovertJaguar"
+  ],
+  "screenshots": [
+  ],
+  "parent":"",
+}
+]
