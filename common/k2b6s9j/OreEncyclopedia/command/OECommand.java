@@ -8,6 +8,7 @@ import java.util.List;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -63,7 +64,10 @@ public class OECommand implements ICommand
   }
   
   private void commandVersion(ICommandSender sender, String[] arguments) {
-	  if (arguments[1].matches("all")) {
+	  if (arguments.length <= 1) {
+		  sender.sendChatToPlayer(ChatMessageComponent.func_111066_d("You must provide either an OreDictionary entry name or the term 'all'"));
+		  return;
+	  }else if (arguments[1].matches("all")) {
 		  List<String> entries = Arrays.asList(OreDictionary.getOreNames());
 		  sortList(entries);
 		  for (String entry : entries) {
@@ -71,7 +75,17 @@ public class OECommand implements ICommand
 		  }
 		  return;
 	  } else {
-		  sender.sendChatToPlayer(ChatMessageComponent.func_111066_d("You must provide either an OreDictionary entry name or the term 'all'"));
+		  List<String> entries = Arrays.asList(OreDictionary.getOreNames());
+		  List<ItemStack> definitions = OreDictionary.getOres(arguments[1]);
+		  if (entries.contains(arguments[1])) {
+			  sender.sendChatToPlayer(ChatMessageComponent.func_111066_d(arguments[1]));
+			  for (ItemStack definition : definitions) {
+				  sender.sendChatToPlayer(ChatMessageComponent.func_111066_d("- " + definition.getDisplayName() + " (" + definition.toString() + ")"));
+			  }
+			  return;
+		  } else {
+			  sender.sendChatToPlayer(ChatMessageComponent.func_111066_d("The term " + arguments[1] + " is not in the OreDictionary"));
+		  }
 	  }
   }
   
