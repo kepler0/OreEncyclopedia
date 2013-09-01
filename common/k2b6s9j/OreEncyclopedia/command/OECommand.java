@@ -7,6 +7,7 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.util.ChatMessageComponent;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class OECommand implements ICommand
 {
@@ -48,7 +49,7 @@ public class OECommand implements ICommand
 			sender.sendChatToPlayer(ChatMessageComponent.func_111066_d("- exchange : Exchange the item being held for another in the same entry."));
 			return;
 		} else if (arguments[0].matches("list")) {
-			sender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Not yet implemented"));
+			commandVersion(sender, arguments);
 			return;
 		} else if (arguments[0].matches("exchange")) {
 			sender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Not yet implemented"));
@@ -56,6 +57,17 @@ public class OECommand implements ICommand
 		}
 
 		throw new WrongUsageException(this.getCommandUsage(sender));
+  }
+  
+  private void commandVersion(ICommandSender sender, String[] arguments) {
+	  if (arguments[1].matches("all")) {
+		  for (String entry : OreDictionary.getOreNames()) {
+			  sender.sendChatToPlayer(ChatMessageComponent.func_111066_d(entry));
+		  }
+		  return;
+	  } else {
+		  sender.sendChatToPlayer(ChatMessageComponent.func_111066_d("You must provide either an OreDictionary entry name or the term 'all'"));
+	  }
   }
 
   @Override
