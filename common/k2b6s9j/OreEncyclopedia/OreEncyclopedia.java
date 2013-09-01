@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -19,6 +20,7 @@ public class OreEncyclopedia {
 	
 	//Configuration Booleans
 	public static Boolean logInfo;
+	public static Boolean logEntries;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -26,6 +28,7 @@ public class OreEncyclopedia {
         try
         {
         	logInfo = cfg.get("Features", "logInfo", true, "Should post mod name, copyright, and website in log.").getBoolean(true);
+        	logEntries = cfg.get("Features", "logEntries", true, "Should post all of the loaded OreDictionary entries in the log").getBoolean(true);
         }
         catch (Exception e)
         {
@@ -49,6 +52,11 @@ public class OreEncyclopedia {
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
+		if (logEntries) {
+			for (String entry : OreDictionary.getOreNames()) {
+				oeLog.info("Found an OreDictionary entry titled " + entry);
+			}
+		}
 		
 	}
 }
