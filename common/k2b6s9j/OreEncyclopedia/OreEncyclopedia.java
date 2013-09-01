@@ -33,7 +33,7 @@ public class OreEncyclopedia {
         }
         catch (Exception e)
         {
-            FMLLog.log(Level.SEVERE, e, "OreDictionary had a problem loading it's configuration");
+            FMLLog.log(Level.SEVERE, e, "OreEncyclopedia had a problem loading it's configuration");
         }
         finally
         {
@@ -57,7 +57,7 @@ public class OreEncyclopedia {
 			for (String entry : OreDictionary.getOreNames()) {
 				oeLog.info("Found an OreDictionary entry titled " + entry);
 				for (ItemStack item : OreDictionary.getOres(entry)) {
-					oeLog.info(entry + " contains " + item.getDisplayName() + " (" + item.getClass() + ")");
+					oeLog.info(entry + " contains " + item.getDisplayName() + " (" + item.toString() + ")");
 				}
 			}
 		}
