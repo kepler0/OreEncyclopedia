@@ -3,15 +3,18 @@ package k2b6s9j.OreEncyclopedia;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import k2b6s9j.OreEncyclopedia.command.OECommand;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.ServerStarting;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
 @Mod(modid = "OreEncyclopedia", name = "OreEncylopedia", version = "1.0")
 public class OreEncyclopedia {
@@ -61,6 +64,11 @@ public class OreEncyclopedia {
 				}
 			}
 		}
-		
+	}
+	
+	@EventHandler
+	public void serverLoad(FMLServerStartingEvent event)
+	{
+		event.registerServerCommand(new OECommand());
 	}
 }
