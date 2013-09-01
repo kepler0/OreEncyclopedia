@@ -193,9 +193,9 @@
 
 	<target name="copy-new-code">
 		<!-- Takes the new code from the build envrironment, most likely made with Eclipse and puts it in the main source directory -->
-		<delete dir="${src.dir}/k2b6s9j/OreEncylopedia"/>
-		<copy todir="${src.dir}/k2b6s9j/OreEncylopedia">
-			<fileset dir="${commonsrc.dir}/k2b6s9j/OreEncylopedia"/>
+		<delete dir="${src.dir}/k2b6s9j/OreEncyclopedia"/>
+		<copy todir="${src.dir}/k2b6s9j/OreEncyclopedia">
+			<fileset dir="${commonsrc.dir}/k2b6s9j/OreEncyclopedia"/>
 		</copy>
 	</target>
 
