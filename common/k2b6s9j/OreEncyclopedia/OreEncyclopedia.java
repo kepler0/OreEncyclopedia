@@ -3,6 +3,7 @@ package k2b6s9j.OreEncyclopedia;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.FMLLog;
@@ -55,6 +56,9 @@ public class OreEncyclopedia {
 		if (logEntries) {
 			for (String entry : OreDictionary.getOreNames()) {
 				oeLog.info("Found an OreDictionary entry titled " + entry);
+				for (ItemStack item : OreDictionary.getOres(entry)) {
+					oeLog.info(entry + " contains " + item.getDisplayName() + " (" + item.getClass() + ")");
+				}
 			}
 		}
 		
