@@ -123,10 +123,10 @@
 		<!-- Copies this mods source and resources! -->
 
 		<!-- Delete source in build space -->
-		<delete dir="${commonsrc.dir}/k2b6s9j/BoatCraft"/>
+		<delete dir="${commonsrc.dir}/k2b6s9j/OreEncylopedia"/>
 
 		<!-- Delete resources in build space -->
-		<delete dir="${commonsrc.dir}/assets/k2b6s9j/BoatCraft"/>
+		<delete dir="${commonsrc.dir}/assets/k2b6s9j/OreEncyclopedia"/>
 		<delete file="${commonsrc.dir}/mcmod.info"/>
 
 		<!-- Copy source -->
