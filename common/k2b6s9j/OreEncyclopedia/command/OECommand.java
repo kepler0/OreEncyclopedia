@@ -7,16 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandNotFoundException;
-import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.command.NumberInvalidException;
 import net.minecraft.command.WrongUsageException;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatMessageComponent;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.oredict.OreDictionary;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.ModContainer;
 
 public class OECommand extends CommandBase
 {
@@ -74,9 +71,23 @@ public class OECommand extends CommandBase
 		  sender.sendChatToPlayer(ChatMessageComponent.func_111066_d("You must provide either an OreDictionary entry name or the term 'all'"));
 		  return;
 	  }else if (arguments[1].matches("all")) {
-		  List<String> entries = Arrays.asList(OreDictionary.getOreNames());
-		  sortList(entries);
-		  for (String entry : entries) {
+		  List<String> entries = sortList(Arrays.asList(OreDictionary.getOreNames()));
+		  int size = entries.size();
+		  int perPage = 7;
+		  int pages = (int) Math.ceil(size / (float) perPage);
+			
+		  int page = arguments.length == 2 ? 2 : parseIntBounded(sender, arguments[2], 1, pages) - 1;
+		  int min = Math.min(page * perPage, size);
+
+		  //OutputHandler.chatConfirmation(sender, Localization.format("command.modlist.header", page + 1, pages));
+
+		  for (int i = page * perPage; i < min + perPage; i++)
+		  {
+			  if (i >= size)
+			  {
+				  break;
+			  }
+			  String entry = entries.get(i);
 			  sender.sendChatToPlayer(ChatMessageComponent.func_111066_d(entry));
 		  }
 		  return;
