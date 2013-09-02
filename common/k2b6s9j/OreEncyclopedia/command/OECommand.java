@@ -77,7 +77,7 @@ public class OECommand extends CommandBase
 		  int perPage = 7;
 		  int pages = (int) Math.ceil(size / (float) perPage);
 			
-		  int page = arguments.length == 2 ? 2 : parseIntBounded(sender, arguments[2], 1, pages) - 1;
+		  int page = arguments.length == 2 ? 0 : parseIntBounded(sender, arguments[2], 1, pages) - 1;
 		  int min = Math.min(page * perPage, size);
 
 		  sender.sendChatToPlayer(ChatMessageComponent.func_111082_b("commands.help.header", new Object[] {Integer.valueOf(page + 1), Integer.valueOf(pages)}).func_111059_a(EnumChatFormatting.DARK_GREEN));
