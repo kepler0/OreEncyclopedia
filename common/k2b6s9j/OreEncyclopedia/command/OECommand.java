@@ -11,6 +11,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatMessageComponent;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
@@ -79,7 +80,7 @@ public class OECommand extends CommandBase
 		  int page = arguments.length == 2 ? 2 : parseIntBounded(sender, arguments[2], 1, pages) - 1;
 		  int min = Math.min(page * perPage, size);
 
-		  //OutputHandler.chatConfirmation(sender, Localization.format("command.modlist.header", page + 1, pages));
+		  sender.sendChatToPlayer(ChatMessageComponent.func_111082_b("commands.help.header", new Object[] {Integer.valueOf(page), Integer.valueOf(pages)}).func_111059_a(EnumChatFormatting.DARK_GREEN));
 
 		  for (int i = page * perPage; i < min + perPage; i++)
 		  {
