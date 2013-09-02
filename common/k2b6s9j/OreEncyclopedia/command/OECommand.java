@@ -80,7 +80,7 @@ public class OECommand extends CommandBase
 		  int page = arguments.length == 2 ? 0 : parseIntBounded(sender, arguments[2], 1, pages) - 1;
 		  int min = Math.min(page * perPage, size);
 
-		  sender.sendChatToPlayer(ChatMessageComponent.func_111082_b("commands.help.header", new Object[] {Integer.valueOf(page + 1), Integer.valueOf(pages)}).func_111059_a(EnumChatFormatting.DARK_GREEN));
+		  sender.sendChatToPlayer(ChatMessageComponent.func_111082_b("--- Showing page %s of %s (/oe list all <page>) ---", new Object[] {Integer.valueOf(page + 1), Integer.valueOf(pages)}).func_111059_a(EnumChatFormatting.DARK_GREEN));
 
 		  for (int i = page * perPage; i < min + perPage; i++)
 		  {
