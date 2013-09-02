@@ -4,15 +4,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
-import net.minecraft.command.ICommand;
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatMessageComponent;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.oredict.OreDictionary;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.ModContainer;
 
-public class OECommand implements ICommand
+public class OECommand extends CommandBase
 {
   private List aliases;
   
@@ -53,7 +57,7 @@ public class OECommand implements ICommand
 			sender.sendChatToPlayer(ChatMessageComponent.func_111066_d("- exchange : Exchange the item being held for another in the same entry."));
 			return;
 		} else if (arguments[0].matches("list")) {
-			commandVersion(sender, arguments);
+			list(sender, arguments);
 			return;
 		} else if (arguments[0].matches("exchange")) {
 			sender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Not yet implemented"));
@@ -63,14 +67,28 @@ public class OECommand implements ICommand
 		throw new WrongUsageException(this.getCommandUsage(sender));
   }
   
-  private void commandVersion(ICommandSender sender, String[] arguments) {
+  private void list(ICommandSender sender, String[] arguments) {
 	  if (arguments.length <= 1) {
 		  sender.sendChatToPlayer(ChatMessageComponent.func_111066_d("You must provide either an OreDictionary entry name or the term 'all'"));
 		  return;
 	  }else if (arguments[1].matches("all")) {
-		  List<String> entries = Arrays.asList(OreDictionary.getOreNames());
-		  sortList(entries);
-		  for (String entry : entries) {
+		  List<String> entries = sortList(Arrays.asList(OreDictionary.getOreNames()));
+		  int size = entries.size();
+		  int perPage = 7;
+		  int pages = (int) Math.ceil(size / (float) perPage);
+			
+		  int page = arguments.length == 2 ? 0 : parseIntBounded(sender, arguments[2], 1, pages) - 1;
+		  int min = Math.min(page * perPage, size);
+
+		  sender.sendChatToPlayer(ChatMessageComponent.func_111082_b("--- Showing page %s of %s (/oe list all <page>) ---", new Object[] {Integer.valueOf(page + 1), Integer.valueOf(pages)}).func_111059_a(EnumChatFormatting.DARK_GREEN));
+
+		  for (int i = page * perPage; i < min + perPage; i++)
+		  {
+			  if (i >= size)
+			  {
+				  break;
+			  }
+			  String entry = entries.get(i);
 			  sender.sendChatToPlayer(ChatMessageComponent.func_111066_d(entry));
 		  }
 		  return;
