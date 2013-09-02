@@ -57,11 +57,16 @@ public class OreEncyclopedia {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		if (logEntries) {
-			for (String entry : OreDictionary.getOreNames()) {
-				oeLog.info("Found an OreDictionary entry titled " + entry);
-				for (ItemStack item : OreDictionary.getOres(entry)) {
-					oeLog.info(entry + " contains " + item.getDisplayName() + " (" + item.toString() + ")");
+			try {
+				for (String entry : OreDictionary.getOreNames()) {
+					oeLog.info("Found an OreDictionary entry titled " + entry);
+					for (ItemStack item : OreDictionary.getOres(entry)) {
+						oeLog.info(entry + " contains " + item.getDisplayName() + " (" + item.toString() + ")");
+					}
 				}
+			}
+			catch (Exception e) {
+				oeLog.warning("Something failed!");
 			}
 		}
 	}
