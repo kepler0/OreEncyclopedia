@@ -1,5 +1,8 @@
 package k2b6s9j.OreEncyclopedia;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -7,16 +10,19 @@ import k2b6s9j.OreEncyclopedia.command.OECommand;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
+
+import org.mcstats.Metrics;
+import org.mcstats.Metrics.Graph;
+
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.ServerStarting;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
-@Mod(modid = "OreEncyclopedia", name = "OreEncylopedia", version = "1.0")
+@Mod(modid = "OreEncyclopedia", name = "OreEncylopedia", version = "1.1")
 public class OreEncyclopedia {
 	
 	//Logger
@@ -69,6 +75,25 @@ public class OreEncyclopedia {
 				oeLog.warning("Something failed!");
 			}
 		}
+		try {
+            Metrics metrics = new Metrics("OreEncyclopedia", "1.1");
+            metrics.start();
+            
+            Graph entries = metrics.createGraph("OreDictionary Entries and Definitions");
+
+            for (String entry : OreDictionary.getOreNames()) {
+            	entries.addPlotter(new Metrics.Plotter(entry) {
+            		
+            		@Override
+                    public int getValue() {
+            			List<String> entries = Arrays.asList(OreDictionary.getOreNames());
+                        return entries.size();
+                    }
+
+            });}
+        } catch (IOException e) {
+            // Failed to submit the stats :-(
+        }
 	}
 	
 	@EventHandler
